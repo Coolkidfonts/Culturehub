@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengali Poems</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="icons/4.jpeg" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Bengali Poems</h1>
+        <p>Created By Aadrita</p>
+        
+        <!-- Hamburger Menu Icon -->
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        
+        <!-- Navigation Links -->
+        <nav id="nav-links">
+            <a href="hindi.html" class="nav-button" target="_blank">Hindi Songs</a>
+            <a href="english.html" class="nav-button" target="_blank">English Songs</a>
+            <a href="bengali.html" class="nav-button" target="_blank">Bengali Songs</a>
+            <a href="englishpoem.html" class="nav-button" target="_blank">English Poems</a>
+            <a href="bengalipoem.html" class="nav-button" target="_blank">Bengali Poems</a>
+            <a href="upload.html" class="nav-button" target="_blank">Upload</a>
+        </nav>
+    </header>
+    <div id="song-list">
+        <!-- Songs will be dynamically inserted here -->
+    </div>
+
+    <script>
+        function setupCustomPlayer(audioElement, playerElement) {
+            const playBtn = playerElement.querySelector('.play-btn');
+            const progressBar = playerElement.querySelector('.progress-bar');
+            const timeDisplay = playerElement.querySelector('.time');
+
+            playBtn.addEventListener('click', () => {
+                if (audioElement.paused) {
+                    audioElement.play();
+                    playBtn.textContent = 'Pause';
+                } else {
+                    audioElement.pause();
+                    playBtn.textContent = 'Play';
+                }
+            });
+
+            audioElement.addEventListener('timeupdate', () => {
+                const progress = (audioElement.currentTime / audioElement.duration) * 100;
+                progressBar.value = progress;
+                progressBar.style.setProperty('--progress-width', `${progress}%`);
+                timeDisplay.textContent = formatTime(audioElement.currentTime);
+            });
+
+            progressBar.addEventListener('input', () => {
+                const newTime = (progressBar.value / 100) * audioElement.duration;
+                audioElement.currentTime = newTime;
+            });
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+        }
+
+        function loadSongs() {
+            const songList = document.getElementById('song-list');
+            const songs = [
+                
+            ];
+
+            songs.forEach(song => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+
+                const songName = document.createElement('h2');
+                songName.textContent = song.name;
+                songItem.appendChild(songName);
+
+                const audio = document.createElement('audio');
+                audio.src = song.audioSrc;
+                audio.style.display = 'none'; // Hide the default audio player
+                songItem.appendChild(audio);
+
+                const customPlayer = document.createElement('div');
+                customPlayer.className = 'custom-audio-player';
+                customPlayer.innerHTML = `
+                    <button class="play-btn">Play</button>
+                    <input type="range" class="progress-bar" value="0" max="100">
+                    <span class="time">00:00</span>
+                `;
+                songItem.appendChild(customPlayer);
+
+                setupCustomPlayer(audio, customPlayer);
+
+                const lyricsContainer = document.createElement('div');
+                lyricsContainer.className = 'lyrics-container';
+                lyricsContainer.style.display = 'none';
+                songItem.appendChild(lyricsContainer);
+
+                const lyricsButton = document.createElement('button');
+                lyricsButton.textContent = 'Show Lyrics';
+                lyricsButton.className = 'show-lyrics-button';
+                lyricsButton.onclick = () => toggleLyrics(song.lyricsSrc, lyricsContainer, lyricsButton);
+                songItem.appendChild(lyricsButton);
+
+                songList.appendChild(songItem);
+            });
+        }
+
+        function toggleLyrics(src, container, button) {
+            if (container.style.display === 'none') {
+                fetch(src)
+                    .then(response => response.text())
+                    .then(data => {
+                        container.innerHTML = `<pre>${data}</pre>`;
+                        container.style.display = 'block';
+                        button.textContent = 'Hide Lyrics';
+                    });
+            } else {
+                container.style.display = 'none';
+                button.textContent = 'Show Lyrics';
+            }
+        }
+
+        window.onload = loadSongs;
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

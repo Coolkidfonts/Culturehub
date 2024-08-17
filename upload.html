@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Upload Song/Poem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .upload-form {
+            max-width: 600px; /* Increased width for better fit */
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            align-content: center;
+        }
+        .upload-form input[type="text"], 
+        .upload-form select, 
+        .upload-form input[type="file"], 
+        .upload-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .upload-form input[type="submit"] {
+            background-color: #00796b;
+            color: white;
+            cursor: pointer;
+        }
+        .upload-form input[type="submit"]:hover {
+            background-color: #004d40;
+        }
+        .output {
+            margin-top: 20px;
+            background-color: #e0f7fa;
+            padding: 15px;
+            border-radius: 8px;
+            word-wrap: break-word;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .copy-button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .copy-button:hover {
+            background-color: #004d40;
+        }
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+            max-width: 100%;
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .instructions h3 {
+            margin-top: 0;
+        }
+        pre {
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word; /* Prevent overflow */
+        }
+        .nav-button {
+    padding: 10px 20px;
+    background-color: #00796b; /* Vibrant orange */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    
+}
+.nav-button:hover{
+    background-color: #004d40;
+}
+    </style>
+    <link rel="shortcut icon" href="icons/6.jpeg" type="image/x-icon">
+</head>
+<body>
+    <div class="upload-form">
+        <a href="hindi.html" target="_blank" class="nav-button">Back To Home</a>
+        <h2>Upload Song/Poem</h2>
+        <form id="uploadForm">
+            <label for="songName">Song/Poem Name:</label>
+            <input type="text" id="songName" required>
+
+            <label for="category">Category:</label>
+            <select id="category" required>
+                <option value="hindi">Hindi Songs</option>
+                <option value="bengalisongs">Bengali Songs</option>
+                <option value="bengalipoem">Bengali Poem</option>
+                <option value="englishsongs">English Songs</option>
+                <option value="englishpoem">English Poem</option>
+            </select>
+
+            <label for="audioFile">Upload Audio File (.mp3):</label>
+            <input type="file" id="audioFile" accept=".mp3" required>
+
+            <label for="lyricsFile">Upload Lyrics File (.txt):</label>
+            <input type="file" id="lyricsFile" accept=".txt" required>
+
+            <input type="submit" value="Generate Code">
+        </form>
+
+        <div id="output" class="output" style="display:none;">
+            <button class="copy-button" id="copyButton">Copy Code</button>
+            <p id="successMessage" class="success-message">Successfully copied to clipboard!</p>
+
+            <div class="instructions">
+                <h3>How to Use the Code:</h3>
+                <p>1. **Locate the JavaScript File**: Open the HTML file where you want to add the new song/poem (e.g., `hindi.html`, `english.html`). Find the `<script src="script.js"></script>` tag, which includes your JavaScript file.</p>
+                <p>2. **Open the JavaScript File**: Open `script.js` in your code editor.</p>
+                <p>3. **Find the `loadSongs` Function**: Look for the `loadSongs` function within `script.js`. It should look something like this:</p>
+                <pre><code>function loadSongs() {
+    const songList = document.getElementById('song-list');
+    const songs = [
+        // Add Song and Lyrics Here
+    ];
+}</code></pre>
+                <p>4. **Paste the Code**: Insert the copied code snippet into the array within the `songs` variable. For example:</p>
+                <pre><code>const songs = [
+    { name: 'Your Song Name', audioSrc: 'audio/your-category/your-audio-file.mp3', lyricsSrc: 'lyrics/your-categorylyrics/your-lyrics-file.txt' },
+    // ... other songs
+];</code></pre>
+                <p>5. **Save Your Changes**: Save the changes to `script.js` and refresh your HTML page to see the newly added song/poem.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = function(event) {
+            event.preventDefault();
+
+            const songName = document.getElementById('songName').value.trim();
+            const category = document.getElementById('category').value.trim();
+            const audioFile = document.getElementById('audioFile').files[0];
+            const lyricsFile = document.getElementById('lyricsFile').files[0];
+
+            if (!audioFile || !lyricsFile) {
+                alert("Please upload both the audio and lyrics files.");
+                return;
+            }
+
+            // Extract file names without extensions
+            const audioFileName = audioFile.name.split('.').slice(0, -1).join('.');
+            const lyricsFileName = lyricsFile.name.split('.').slice(0, -1).join('.');
+
+            // Construct the file paths
+            const audioSrc = `audio/${category}/${audioFileName}.mp3`;
+            const lyricsSrc = `lyrics/${category}lyrics/${lyricsFileName}.txt`;
+
+            // Generate the code snippet
+            const codeSnippet = `{ name: '${songName}', audioSrc: '${audioSrc}', lyricsSrc: '${lyricsSrc}' },`;
+
+            // Store the code in a hidden element for copying
+            const hiddenCodeElement = document.createElement('textarea');
+            hiddenCodeElement.value = codeSnippet;
+            hiddenCodeElement.style.position = 'absolute';
+            hiddenCodeElement.style.left = '-9999px';
+            document.body.appendChild(hiddenCodeElement);
+
+            // Show the copy button and hide the actual code
+            document.getElementById('output').style.display = 'block';
+
+            // Copy the code to clipboard when button is clicked
+            document.getElementById('copyButton').onclick = function() {
+                hiddenCodeElement.select();
+                document.execCommand('copy');
+                document.body.removeChild(hiddenCodeElement);
+
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+
+                // Hide success message after 2 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 2000);
+            };
+        };
+    </script>
+</body>
+</html>

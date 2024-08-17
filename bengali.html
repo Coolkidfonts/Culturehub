@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengali Songs</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="icons/3.jpeg" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Bengali Songs</h1>
+        <p>Created By Aadrita</p>
+        
+        <!-- Hamburger Menu Icon -->
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        
+        <!-- Navigation Links -->
+        <nav id="nav-links">
+            <a href="hindi.html" class="nav-button" target="_blank">Hindi Songs</a>
+            <a href="english.html" class="nav-button" target="_blank">English Songs</a>
+            <a href="bengali.html" class="nav-button" target="_blank">Bengali Songs</a>
+            <a href="englishpoem.html" class="nav-button" target="_blank">English Poems</a>
+            <a href="bengalipoem.html" class="nav-button" target="_blank">Bengali Poems</a>
+            <a href="upload.html" class="nav-button" target="_blank">Upload</a>
+        </nav>
+    </header>
+    <div id="song-list">
+        <!-- Songs will be dynamically inserted here -->
+    </div>
+    
+
+    <script>
+        function setupCustomPlayer(audioElement, playerElement) {
+            const playBtn = playerElement.querySelector('.play-btn');
+            const progressBar = playerElement.querySelector('.progress-bar');
+            const timeDisplay = playerElement.querySelector('.time');
+
+            playBtn.addEventListener('click', () => {
+                if (audioElement.paused) {
+                    audioElement.play();
+                    playBtn.textContent = 'Pause';
+                } else {
+                    audioElement.pause();
+                    playBtn.textContent = 'Play';
+                }
+            });
+
+            audioElement.addEventListener('timeupdate', () => {
+                const progress = (audioElement.currentTime / audioElement.duration) * 100;
+                progressBar.value = progress;
+                progressBar.style.setProperty('--progress-width', `${progress}%`);
+                timeDisplay.textContent = formatTime(audioElement.currentTime);
+            });
+
+            progressBar.addEventListener('input', () => {
+                const newTime = (progressBar.value / 100) * audioElement.duration;
+                audioElement.currentTime = newTime;
+            });
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+        }
+
+        function loadSongs() {
+            const songList = document.getElementById('song-list');
+            const songs = [
+
+            { name: 'Aaj Bangladesher Hridoy Hote', audioSrc: 'audio/bengalisongs/Aaj-Bangladesher-Hridoy-Hote.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aaj-Bangladesher-Hridoy-Hote.txt' },
+            { name: 'Aaji Sharat Tapane', audioSrc: 'audio/bengalisongs/Aaji Sharat Tapane, Prabhat Swapane.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aaji Sharat Tapane, Prabhat Swapane.txt' },
+            { name: 'Aaji Dakhinduar Khola', audioSrc: 'audio/bengalisongs/Aaji-Dakhinduar-Khola.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aaji-Dakhinduar-Khola.txt' },
+            { name: 'Aaji Shubhodine Pitar Bhabane', audioSrc: 'audio/bengalisongs/Aaji-Shubhodine-Pitar-Bhabane.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aaji-Shubhodine-Pitar-Bhabane.txt' },
+            { name: 'Aaj Jyotsnaraate Sobai', audioSrc: 'audio/bengalisongs/Aaj-Jyotsnaraate-Sobai.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aaj-Jyotsnaraate-Sobai.txt' },
+            { name: 'Aami Ki Gaan Gabo Je', audioSrc: 'audio/bengalisongs/Aami-Ki-Gaan-Gabo-Je.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aami-Ki-Gaan-Gabo-Je.txt' },
+            { name: 'Adhek Ghume Nayan Chume', audioSrc: 'audio/bengalisongs/Adhek-Ghume-Nayan-Chume.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Adhek-Ghume-Nayan-Chume.txt' },
+            { name: 'Aguner Parashmani Chhowao', audioSrc: 'audio/bengalisongs/Aguner Parashmani Chhowao.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aguner Parashmani Chhowao.txt' },
+            { name: 'Aji Bijana Ghare Nishitha Rate', audioSrc: 'audio/bengalisongs/Aji Bijana Ghare Nishitha Rate.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aji Bijana Ghare Nishitha Rate.txt' },
+            { name: 'Aj Khela Bhangar Khela', audioSrc: 'audio/bengalisongs/Aj-Khela-Bhangar-Khela.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aj-Khela-Bhangar-Khela.txt' },
+            { name: 'Aj Khela Bhangar Khela', audioSrc: 'audio/bengalisongs/Aj-Khela-Bhangar-Khela.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aj-Khela-Bhangar-Khela.txt' },
+            { name: 'Ali Bar Bar Phire Jai', audioSrc: 'audio/bengalisongs/Ali-Bar-Bar-Phire-Jai.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Ali-Bar-Bar-Phire-Jai.txt' },
+            { name: 'Aloker ei Jhorna Dharaye', audioSrc: 'audio/bengalisongs/Aloker ei jhorna dharaye.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Aloker ei jhorna dharaye.txt' },
+            { name: 'Alpo Loia Thaki Tai', audioSrc: 'audio/bengalisongs/Alpo Loia Thaki Tai(অলপ লইয় থক) - SUCHITRA MITRA.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Alpo Loia Thaki Tai(অলপ লইয় থক) - SUCHITRA MITRA.txt' },
+            { name: 'Amar Aar Habe Na Deri', audioSrc: 'audio/bengalisongs/Amar Aar Habe Na Deri.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar Aar Habe Na Deri.txt' },
+            { name: 'Amar E Path Tomar Patheer Theke', audioSrc: 'audio/bengalisongs/Amar E Path Tomar Patheer Theke.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar E Path Tomar Patheer Theke.txt' },
+            { name: 'Amar Molika Bone', audioSrc: 'audio/bengalisongs/Amar Mollika Bone - Jayati Chakraborty.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar Mollika Bone - Jayati Chakraborty.txt' },
+            { name: 'Amar Mon Mane Na', audioSrc: 'audio/bengalisongs/Amar Mon Mane Na Hemanta Mukherjee.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar Mon Mane Na Hemanta Mukherjee.txt' },
+            { name: 'Amar Mukti Aloy Aloy', audioSrc: 'audio/bengalisongs/Amar Mukti Aloy Aloy Suchitra Mitra.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar Mukti Aloy Aloy Suchitra Mitra.txt' },
+            { name: 'Amar Praner Pare', audioSrc: 'audio/bengalisongs/Amar Praner Pare.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar Praner Pare.txt' },
+            { name: 'Amar Bela Je Jai', audioSrc: 'audio/bengalisongs/Amar-Bela-Je-Jai-Sanjh-Belata.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Bela-Je-Jai-Sanjh-Belata.txt' },
+            { name: 'Amar Bhanga Pather Ranga Dhulay', audioSrc: 'audio/bengalisongs/Amar-Bhanga-Pather-Ranga-Dhulay.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Bhanga-Pather-Ranga-Dhulay.txt' },
+            { name: 'Amar Byatha Jakhan Ane Amay', audioSrc: 'audio/bengalisongs/Amar-Byatha-Jakhan-Ane-Amay.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Byatha-Jakhan-Ane-Amay.txt' },
+            { name: 'Amar Ei Path Chaoyatei Ananda', audioSrc: 'audio/bengalisongs/Amar-Ei-Path-Chaoyatei-Ananda.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Ei-Path-Chaoyatei-Ananda.txt' },
+            { name: 'Amar Hiyar Majhe Lukiye Chhile', audioSrc: 'audio/bengalisongs/Amar-Hiyar-Majhe-Lukiye-Chhile.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Hiyar-Majhe-Lukiye-Chhile.txt' },
+            { name: 'Amar Hriday Tomar Apan Hater Dole', audioSrc: 'audio/bengalisongs/Amar-Hriday-Tomar-Apan-Hater-Dole.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Hriday-Tomar-Apan-Hater-Dole.txt' },
+            { name: 'Amar Jabar Belay Pichu Dake', audioSrc: 'audio/bengalisongs/Amar-Jabar-Belay-Pichhu-Dake.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Jabar-Belay-Pichhu-Dake.txt' },
+            { name: 'Amar Jibanpatra Uchchhaliya', audioSrc: 'audio/bengalisongs/Amar-Jibanpatra-Uchchhaliya.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Jibanpatra-Uchchhaliya.txt' },
+            { name: 'Amar Kantho Hote Gaan Ke Nilo', audioSrc: 'audio/bengalisongs/Amar-Kantho-Hote-Gaan-Ke-Nilo.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Kantho-Hote-Gaan-Ke-Nilo.txt' },
+            { name: 'Amar Khela Jakhon Chhilo Tomar Sane', audioSrc: 'audio/bengalisongs/Amar-Khela-Jakhon-Chhilo-Tomar-Sane.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Khela-Jakhon-Chhilo-Tomar-Sane.txt' },
+            { name: 'Amar Matha Nato Kore Dao', audioSrc: 'audio/bengalisongs/Amar-Matha-Nato-Kore-Dao.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Matha-Nato-Kore-Dao.txt' },
+            { name: 'Amar Mon Cheye Roy Mone Mone', audioSrc: 'audio/bengalisongs/Amar-Mon-Cheye-Roy-Mone-Mone.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Mon-Cheye-Roy-Mone-Mone.txt' },
+            { name: 'Amar Mon Mane Na Dinrajani', audioSrc: 'audio/bengalisongs/Amar-Mon-Mane-Na-Dinrajani.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Mon-Mane-Na-Dinrajani.txt' },
+            { name: 'Amar Paran Jaha Chay', audioSrc: 'audio/bengalisongs/Amar-Paran-Jaha-Chay.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Paran-Jaha-Chay.txt' },
+            { name: 'Amar Praner Manus Achhe Prane', audioSrc: 'audio/bengalisongs/Amar-Praner-Manus-Achhe-Prane.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Praner-Manus-Achhe-Prane.txt' },
+            { name: 'Amar Raat Pohalo', audioSrc: 'audio/bengalisongs/Amar-Raat-Pohalo.mp3', lyricsSrc: 'lyrics/bengalisongslyrics/Amar-Raat-Pohalo.txt' },
+            
+        ];
+            songs.forEach(song => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+
+                const songName = document.createElement('h2');
+                songName.textContent = song.name;
+                songItem.appendChild(songName);
+
+                const audio = document.createElement('audio');
+                audio.src = song.audioSrc;
+                audio.style.display = 'none'; // Hide the default audio player
+                songItem.appendChild(audio);
+
+                const customPlayer = document.createElement('div');
+                customPlayer.className = 'custom-audio-player';
+                customPlayer.innerHTML = `
+                    <button class="play-btn">Play</button>
+                    <input type="range" class="progress-bar" value="0" max="100">
+                    <span class="time">00:00</span>
+                `;
+                songItem.appendChild(customPlayer);
+
+                setupCustomPlayer(audio, customPlayer);
+
+                const lyricsContainer = document.createElement('div');
+                lyricsContainer.className = 'lyrics-container';
+                lyricsContainer.style.display = 'none';
+                songItem.appendChild(lyricsContainer);
+
+                const lyricsButton = document.createElement('button');
+                lyricsButton.textContent = 'Show Lyrics';
+                lyricsButton.className = 'show-lyrics-button';
+                lyricsButton.onclick = () => toggleLyrics(song.lyricsSrc, lyricsContainer, lyricsButton);
+                songItem.appendChild(lyricsButton);
+
+                songList.appendChild(songItem);
+            });
+        }
+
+        function toggleLyrics(src, container, button) {
+            if (container.style.display === 'none') {
+                fetch(src)
+                    .then(response => response.text())
+                    .then(data => {
+                        container.innerHTML = `<pre>${data}</pre>`;
+                        container.style.display = 'block';
+                        button.textContent = 'Hide Lyrics';
+                    });
+            } else {
+                container.style.display = 'none';
+                button.textContent = 'Show Lyrics';
+            }
+        }
+
+        window.onload = loadSongs;
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>
