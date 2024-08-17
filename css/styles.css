@@ -1,0 +1,209 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ba8cdf, #a6d5db); /* Light blue gradient background */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styling */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-image: linear-gradient( to right, rgb(122, 215, 228), pink);
+}
+header .nav-button{
+    margin-bottom: 3%;
+    text-align: center;
+    padding: 10px;
+}
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .menu-icon {
+        display: block;
+    }
+}
+
+nav.show {
+    display: flex;
+}
+
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-button {
+    padding: 10px 20px;
+    background-color: #3c51af; /* Vibrant orange */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #e64a19; /* Darker orange */
+    transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+.song-item {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+   background-image: linear-gradient(to right, rgb(185, 236, 178),rgb(226, 166, 238));
+    for song items */;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for contrast */
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.song-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(245, 187, 121, 0.836);
+}
+
+.song-item h2 {
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: #06413a; /* Deep teal color for song titles */
+}
+
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.lyrics-container {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #3c5755; /* Light teal border */
+    border-radius: 5px;
+    background-color: #f7ffff; /* Light teal background */
+    text-align: center;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lyrics-container pre {
+    white-space: pre-wrap; /* Preserves whitespace and line breaks */
+    font-size: 14px;
+    color: #031d10; /* Darker teal for lyrics text */
+}
+.custom-audio-player {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #cfecdb;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-audio-player .play-btn {
+    background-color: #00796b; /* Deep teal */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-audio-player .play-btn:hover {
+    background-color: #e05a00; /* Darker teal */
+}
+
+.custom-audio-player .progress-bar {
+    flex: 1;
+    margin: 0 10px;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 5px;
+    background: #e0f2f1; /* Light teal background for unplayed portion */
+    position: relative; /* Make the container relative */
+}
+
+.custom-audio-player .progress-bar::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 5px;
+    background: #e0f2f1; /* Light teal background for unplayed portion */
+}
+
+.custom-audio-player .progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #0b7c6f; /* Deep teal */
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative; /* Absolutely position within the relative container */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    left: -1%;
+}
+
+.custom-audio-player .progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #00796b; /* Deep teal for played portion */
+    border-radius: 5px;
+    z-index: 1;
+    transition: width 0.001s ease;
+    width: var(--progress-width, 0%);
+}
+
+.custom-audio-player .time {
+    font-size: 14px;
+    color: #083832; /* Deep teal */
+}
+
+.show-lyrics-button{
+    background-color: #2a4900;
+  
+    border: solid black;
+    border-width: 1.5px;
+    border-radius: 10%;
+    font-family: 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    transform: translateY(11px)
+
+}
+.show-lyrics-button:hover{
+    transform: translateY(1.20);
+    box-shadow: 0 8px 16px rgba(245, 187, 121, 0.836);
+    background-color: #e05a00;
+    color: #0f0701;
+}
